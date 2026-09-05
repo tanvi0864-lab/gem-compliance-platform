@@ -3,6 +3,8 @@
 > **AI-Powered Integrated Bid Compliance Verification Platform for GeM Procurement**  
 > *SIH Problem Statement: SIH26100*
 
+🌐 **Live Vercel Deployment**: [https://frontend-mu-topaz-57.vercel.app](https://frontend-mu-topaz-57.vercel.app)
+
 ---
 
 ## 1. Overview
@@ -272,9 +274,10 @@ docker compose up --build
 ## 16. Deployment
 
 ### Frontend (Vercel)
-1. Deploy `frontend/` directory to Vercel.
+- **Live Production URL**: [https://frontend-mu-topaz-57.vercel.app](https://frontend-mu-topaz-57.vercel.app)
+1. Deployed `frontend/` directory to Vercel.
 2. Framework Preset: **Vite**.
-3. Set Environment Variable: `VITE_API_BASE_URL` pointing to deployed backend URL.
+3. Environment Variable: `VITE_API_BASE_URL` pointing to backend service.
 
 ### Backend (Render / Cloud Container)
 1. Deploy `backend/` directory to Render or container host.
