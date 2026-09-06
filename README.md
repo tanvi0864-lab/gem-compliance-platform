@@ -48,6 +48,19 @@ Manual compliance verification of GeM tender submissions presents several operat
 - **Statutory Officer Decision Panel**: Qualification action buttons (`QUALIFIED`, `DISQUALIFIED`, `CLARIFICATION_REQUESTED`, `UNDER_REVIEW`) with custom remarks logging.
 - **PDF Report Generator**: Downloadable compliance audit PDF report powered by ReportLab.
 
+### SIH 2-Minute Demo Presets (Top Navigation Bar)
+To allow SIH judges to evaluate the platform in under 2 minutes, 4 pre-configured demo scenarios can be launched with 1-click from the topbar **"SIH Demo Scenarios"** menu:
+
+1. 🟢 **Bharat Technologies (Score: 96/100 • LOW Risk)**: Fully compliant bidder with 100% verified GSTN, Udyam MSME, OEM MAF, 65% Local Content, and natural human session telemetry.
+2. 🟡 **Nova Systems (Score: 78/100 • MEDIUM Risk)**: Action required — missing OEM MAF authorization letter & 45% local content below Class-I threshold.
+3. 🔴 **Apex Cyber Solutions (Score: 32/100 • HIGH Risk)**: Critical flags — CANCELLED GST status on GSTN portal, expired OEM auth, ₹2.5 Cr turnover below requirement, and active CPPP debarment record.
+4. 🤖 **Zenith Digital (Score: 84/100 • Bot Telemetry Alert)**: Statutory documents 100% compliant, but flagged for **Potential Automation / Script Bidding** (Bid entry in 2.1 seconds with 0ms typing cadence variance).
+
+### Multi-Role Switcher (`OFFICER` | `BIDDER` | `PUBLIC`)
+- 🏛️ **Procurement Officer**: Centralized command studio, 360° bidder profile with 11 verification accordions, evidence drawer, audit replay player, and human-in-the-loop qualification decision.
+- 🏢 **Bidder / Supplier**: Self-service portal to view available tenders, upload statutory certificates with real-time AI OCR extraction, track compliance health, resolve missing documents, and submit bids.
+- 🌐 **Public / Citizen Transparency**: Public-facing disclosure portal showing non-confidential tender outcomes, bidder counts, and audit timelines with **Zero Confidential Data Leaks**.
+
 ---
 
 ## 5. Three Core USPs
