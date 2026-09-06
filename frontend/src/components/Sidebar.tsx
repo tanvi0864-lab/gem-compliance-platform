@@ -10,14 +10,12 @@ import {
   History, 
   FileSpreadsheet, 
   Settings,
-  ShieldAlert,
   Activity,
   Layers,
   Search,
   Eye,
   FileUp,
-  Clock,
-  Sparkles
+  Clock
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -53,13 +51,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentRole }) => {
   const currentNav = currentRole === 'OFFICER' ? officerNav : (currentRole === 'BIDDER' ? bidderNav : publicNav);
 
   return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-800 min-h-[calc(100vh-65px)] flex flex-col justify-between p-4 shrink-0">
+    <aside className="w-64 bg-white border-r border-slate-200 min-h-[calc(100vh-65px)] flex flex-col justify-between p-4 shrink-0 shadow-sm">
       <div className="space-y-1">
-        <div className="flex items-center justify-between px-3 mb-3">
+        <div className="flex items-center justify-between px-3 mb-3 pb-2 border-b border-slate-100">
           <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
             {currentRole === 'OFFICER' ? 'Procurement Command' : (currentRole === 'BIDDER' ? 'Supplier Portal' : 'Citizen Transparency')}
           </p>
-          <span className="text-[10px] font-mono font-bold bg-slate-800 text-blue-400 px-1.5 py-0.5 rounded">
+          <span className="text-[10px] font-mono font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200">
             {currentRole}
           </span>
         </div>
@@ -73,8 +71,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentRole }) => {
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                   isActive
-                    ? 'bg-blue-600/15 text-blue-400 border border-blue-500/30 shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                    ? 'bg-blue-600 text-white font-bold shadow-md shadow-blue-600/20'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`
               }
             >
@@ -85,15 +83,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentRole }) => {
         })}
       </div>
 
-      <div className="mt-8 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs space-y-2">
+      <div className="mt-8 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-slate-400 font-medium text-[11px]">System Status</span>
-          <span className="text-emerald-400 bg-emerald-950/90 px-2 py-0.5 rounded text-[10px] font-bold border border-emerald-800/60">
-            SIMULATED
+          <span className="text-slate-600 font-bold text-[11px]">System Status</span>
+          <span className="text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded text-[10px] font-bold border border-emerald-300">
+            ACTIVE SIMULATION
           </span>
         </div>
-        <p className="text-[11px] text-slate-400 leading-tight">
-          GeM Compliance Verification Engine. 3-Way Cross-Verification active.
+        <p className="text-[11px] text-slate-500 leading-tight">
+          GeM AI Verification Engine active. 3-Way Cross Verification enabled.
         </p>
       </div>
     </aside>

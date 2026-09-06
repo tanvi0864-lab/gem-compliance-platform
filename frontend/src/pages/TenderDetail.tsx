@@ -26,59 +26,59 @@ export const TenderDetail: React.FC = () => {
     }
   };
 
-  if (!tender) return <div className="p-8 text-center text-slate-400">Loading tender details...</div>;
+  if (!tender) return <div className="p-8 text-center text-slate-500">Loading tender details...</div>;
 
   return (
     <div className="space-y-6">
       <button
         onClick={() => navigate('/tenders')}
-        className="flex items-center space-x-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+        className="flex items-center space-x-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Tenders</span>
       </button>
 
       {/* Header */}
-      <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-3">
+      <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-3">
         <div className="flex items-center space-x-3">
-          <span className="bg-blue-950 text-blue-400 border border-blue-800 text-xs font-mono font-bold px-3 py-1 rounded-md">
+          <span className="bg-blue-50 text-blue-700 border border-blue-200 text-xs font-mono font-bold px-3 py-1 rounded-md">
             {tender.tender_id}
           </span>
-          <span className="bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
+          <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold px-3 py-1 rounded-full">
             {tender.status}
           </span>
         </div>
-        <h1 className="text-xl font-bold text-white">{tender.title}</h1>
-        <p className="text-xs text-slate-400">{tender.description}</p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3 border-t border-slate-800 text-xs">
+        <h1 className="text-xl font-bold text-slate-900">{tender.title}</h1>
+        <p className="text-xs text-slate-600">{tender.description}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-3 border-t border-slate-100 text-xs">
           <div>
             <span className="text-slate-500 block">Department</span>
-            <span className="font-semibold text-slate-200">{tender.department}</span>
+            <span className="font-semibold text-slate-800">{tender.department}</span>
           </div>
           <div>
             <span className="text-slate-500 block">Estimated Value</span>
-            <span className="font-mono font-bold text-slate-200">₹{tender.estimated_value} Crores</span>
+            <span className="font-mono font-bold text-slate-900">₹{tender.estimated_value} Crores</span>
           </div>
           <div>
             <span className="text-slate-500 block">Publish Date</span>
-            <span className="font-mono text-slate-300">{tender.publish_date || '2026-08-01'}</span>
+            <span className="font-mono text-slate-700">{tender.publish_date || '2026-08-01'}</span>
           </div>
           <div>
             <span className="text-slate-500 block">Closing Date</span>
-            <span className="font-mono text-slate-300">{tender.closing_date || '2026-09-30'}</span>
+            <span className="font-mono text-slate-700">{tender.closing_date || '2026-09-30'}</span>
           </div>
         </div>
       </div>
 
       {/* USP 2 Checklist Section */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+      <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
           <div>
             <div className="flex items-center space-x-2">
-              <Sparkles className="w-5 h-5 text-blue-400" />
-              <h2 className="text-base font-bold text-white">USP 2: Tender-Aware Dynamic Compliance Checklist</h2>
+              <Sparkles className="w-5 h-5 text-blue-600" />
+              <h2 className="text-base font-bold text-slate-900">USP 2: Tender-Aware Dynamic Compliance Checklist</h2>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-600">
               AI automatically mined eligibility requirements for this tender. Configure thresholds per procurement guidelines.
             </p>
           </div>
@@ -88,31 +88,31 @@ export const TenderDetail: React.FC = () => {
           {tender.requirements?.map((req) => (
             <div
               key={req.id || req.code}
-              className="bg-slate-950/80 border border-slate-800 p-4 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+              className="bg-slate-50 border border-slate-200 p-4 rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3"
             >
               <div className="flex items-start space-x-3">
-                <div className="p-2 rounded-lg bg-blue-950 text-blue-400 border border-blue-800/80 mt-0.5">
+                <div className="p-2 rounded-lg bg-blue-100 text-blue-700 border border-blue-200 mt-0.5">
                   <CheckCircle2 className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="text-[10px] font-mono bg-slate-800 text-slate-300 px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-mono bg-white text-slate-700 px-2 py-0.5 rounded border border-slate-200">
                       {req.code}
                     </span>
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{req.category}</span>
+                    <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">{req.category}</span>
                     {req.is_mandatory && (
-                      <span className="text-[10px] bg-red-950 text-red-400 border border-red-800 px-2 py-0.5 rounded font-semibold">
+                      <span className="text-[10px] bg-red-50 text-red-700 border border-red-200 px-2 py-0.5 rounded font-semibold">
                         Mandatory
                       </span>
                     )}
                   </div>
-                  <h4 className="text-sm font-bold text-slate-200 mt-1">{req.title}</h4>
-                  <p className="text-xs text-slate-400 mt-0.5">{req.description}</p>
+                  <h4 className="text-sm font-bold text-slate-900 mt-1">{req.title}</h4>
+                  <p className="text-xs text-slate-600 mt-0.5">{req.description}</p>
                 </div>
               </div>
 
               <div className="text-right sm:self-center shrink-0">
-                <div className="text-xs font-mono font-bold text-amber-300 bg-slate-900 px-3 py-1 rounded border border-slate-800">
+                <div className="text-xs font-mono font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded border border-amber-200">
                   Threshold: {req.threshold ? `${req.operator} ${req.threshold} ${req.unit || ''}` : 'ACTIVE / VALID'}
                 </div>
               </div>

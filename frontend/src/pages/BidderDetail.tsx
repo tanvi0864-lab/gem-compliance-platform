@@ -44,36 +44,36 @@ export const BidderDetail: React.FC = () => {
     }
   };
 
-  if (!bidder) return <div className="p-8 text-center text-slate-400">Loading bidder profile...</div>;
+  if (!bidder) return <div className="p-8 text-center text-slate-500">Loading bidder profile...</div>;
 
   return (
     <div className="space-y-6">
       <button
         onClick={() => navigate('/bidders')}
-        className="flex items-center space-x-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+        className="flex items-center space-x-2 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Bidders</span>
       </button>
 
       {/* Bidder Profile Header */}
-      <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+      <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center space-x-3">
-              <h1 className="text-xl font-bold text-white">{bidder.company_name}</h1>
-              <span className="bg-slate-800 text-slate-300 font-mono text-xs px-2.5 py-0.5 rounded">
+              <h1 className="text-xl font-bold text-slate-900">{bidder.company_name}</h1>
+              <span className="bg-slate-100 text-slate-700 font-mono text-xs px-2.5 py-0.5 rounded border border-slate-200">
                 {bidder.bidder_code}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-1">{bidder.registered_address}</p>
+            <p className="text-xs text-slate-600 mt-1">{bidder.registered_address}</p>
           </div>
 
           <div className="flex items-center space-x-3">
             <select
               value={selectedDocType}
               onChange={(e) => setSelectedDocType(e.target.value)}
-              className="bg-slate-950 border border-slate-800 text-slate-300 text-xs rounded-xl px-3 py-2 focus:outline-none"
+              className="bg-white border border-slate-200 text-slate-700 text-xs rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="AUTO">AI Auto-Classify Document</option>
               <option value="GST_CERT">GST Certificate</option>
@@ -84,7 +84,7 @@ export const BidderDetail: React.FC = () => {
               <option value="TURNOVER_CERT">Turnover Certificate</option>
             </select>
 
-            <label className="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-2 shadow-lg shadow-blue-600/30 transition-all border border-blue-400/30">
+            <label className="cursor-pointer bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-2 shadow-sm transition-all">
               <Upload className="w-4 h-4" />
               <span>{isUploading ? 'OCR Extracting...' : 'Upload Document'}</span>
               <input type="file" accept=".pdf,.txt" onChange={handleFileUpload} className="hidden" />
@@ -93,51 +93,51 @@ export const BidderDetail: React.FC = () => {
         </div>
 
         {/* Identifiers Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-800 text-xs">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 border-t border-slate-100 text-xs">
           <div>
             <span className="text-slate-500 block">GSTIN</span>
-            <span className="font-mono font-bold text-slate-200">{bidder.gstin || 'N/A'}</span>
+            <span className="font-mono font-bold text-slate-900">{bidder.gstin || 'N/A'}</span>
           </div>
           <div>
             <span className="text-slate-500 block">PAN</span>
-            <span className="font-mono font-bold text-slate-200">{bidder.pan || 'N/A'}</span>
+            <span className="font-mono font-bold text-slate-900">{bidder.pan || 'N/A'}</span>
           </div>
           <div>
             <span className="text-slate-500 block">Udyam Number</span>
-            <span className="font-mono text-slate-300">{bidder.udyam_number || 'N/A'}</span>
+            <span className="font-mono text-slate-700">{bidder.udyam_number || 'N/A'}</span>
           </div>
           <div>
             <span className="text-slate-500 block">CIN</span>
-            <span className="font-mono text-slate-300">{bidder.cin || 'N/A'}</span>
+            <span className="font-mono text-slate-700">{bidder.cin || 'N/A'}</span>
           </div>
         </div>
       </div>
 
       {/* Uploaded Documents List */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-lg space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-          <h2 className="text-base font-bold text-white">Uploaded Statutory Documents & AI OCR Extracted Fields</h2>
-          <span className="text-xs text-slate-400">{bidder.documents?.length || 0} Files Vaulted</span>
+      <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <h2 className="text-base font-bold text-slate-900">Uploaded Statutory Documents & AI OCR Extracted Fields</h2>
+          <span className="text-xs text-slate-500">{bidder.documents?.length || 0} Files Vaulted</span>
         </div>
 
         <div className="space-y-4">
           {bidder.documents?.map((doc) => (
-            <div key={doc.id} className="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
+            <div key={doc.id} className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <div className="p-2 rounded-lg bg-blue-950 text-blue-400 border border-blue-800">
+                  <div className="p-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-blue-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                    <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
                       {doc.document_type}
                     </span>
-                    <h4 className="text-sm font-bold text-slate-200 mt-0.5">{doc.filename}</h4>
+                    <h4 className="text-sm font-bold text-slate-900 mt-0.5">{doc.filename}</h4>
                   </div>
                 </div>
 
                 <div className="text-right text-xs">
-                  <span className="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2.5 py-0.5 rounded-full font-semibold">
+                  <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">
                     {doc.status}
                   </span>
                   <p className="text-[10px] text-slate-500 mt-1">{Math.round((doc.file_size || 250000) / 1024)} KB</p>
@@ -153,11 +153,11 @@ export const BidderDetail: React.FC = () => {
                   {doc.extracted_fields?.map((f) => (
                     <div
                       key={f.id || f.field_name}
-                      className="bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-mono flex items-center space-x-2"
+                      className="bg-white border border-slate-200 px-3 py-1.5 rounded-lg text-xs font-mono flex items-center space-x-2 shadow-xs"
                     >
-                      <span className="text-slate-400 text-[11px] font-sans">{f.field_name}:</span>
-                      <span className="font-bold text-emerald-300">{f.field_value}</span>
-                      <span className="text-[10px] text-slate-500 font-sans">({Math.round(f.confidence * 100)}% conf)</span>
+                      <span className="text-slate-500 text-[11px] font-sans">{f.field_name}:</span>
+                      <span className="font-bold text-emerald-700">{f.field_value}</span>
+                      <span className="text-[10px] text-slate-400 font-sans">({Math.round(f.confidence * 100)}% conf)</span>
                     </div>
                   ))}
                 </div>

@@ -9,9 +9,8 @@ import {
   Clock, 
   AlertTriangle, 
   TrendingUp, 
-  CheckCircle2, 
-  ShieldAlert, 
-  ArrowUpRight 
+  ArrowUpRight,
+  ShieldCheck
 } from 'lucide-react';
 import { ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { useNavigate } from 'react-router-dom';
@@ -35,14 +34,13 @@ export const Dashboard: React.FC = () => {
       setTenders(tList);
       setBidders(bList);
 
-      // Load verifications for all bidders
       const vList: VerificationResult[] = [];
       for (const b of bList) {
         try {
           const v = await api.getVerification(b.id);
           if (v) vList.push(v);
         } catch (e) {
-          // Ignore 404 for bidders without verification
+          // Ignore
         }
       }
       setVerifications(vList);
@@ -67,28 +65,27 @@ export const Dashboard: React.FC = () => {
     score: v.compliance_score,
   }));
 
-  // Aggregate all discrepancies for radar
   const allDiscrepancies = verifications.flatMap((v) => v.discrepancies || []);
 
   return (
     <div className="space-y-6">
       {/* Top Welcome Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/80 p-6 rounded-2xl border border-slate-800 shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900 text-white p-6 rounded-2xl border-l-4 border-l-blue-600 shadow-md">
         <div>
           <div className="flex items-center space-x-3">
-            <h1 className="text-2xl font-black tracking-tight text-white font-sans">Procurement Officer Dashboard</h1>
-            <span className="bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-semibold">
-              Live System
+            <h1 className="text-2xl font-black tracking-tight text-white font-sans">Procurement Officer Command Center</h1>
+            <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 text-xs px-2.5 py-0.5 rounded-full font-semibold">
+              System Active
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-300 mt-1">
             Automated Bid Verification, Evidence Tracking & Statutory Compliance Overview for Government Tenders.
           </p>
         </div>
 
         <button
           onClick={() => navigate('/verification')}
-          className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-lg shadow-blue-600/30 transition-all border border-blue-400/30"
+          className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow transition-all border border-blue-400/30"
         >
           <span>Launch Verification Studio</span>
           <ArrowUpRight className="w-4 h-4" />
@@ -97,57 +94,57 @@ export const Dashboard: React.FC = () => {
 
       {/* 4 Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-md flex items-center justify-between">
+        <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-xs text-slate-400 font-medium">Active Tenders</p>
-            <h3 className="text-2xl font-black text-white mt-1">{tenders.length}</h3>
-            <p className="text-[11px] text-emerald-400 flex items-center mt-1">
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Active Tenders</p>
+            <h3 className="text-2xl font-black text-slate-900 mt-1">{tenders.length}</h3>
+            <p className="text-[11px] text-emerald-700 font-semibold flex items-center mt-1">
               <TrendingUp className="w-3 h-3 mr-1" />
-              <span>1 Active Procurement</span>
+              <span>Active Procurement</span>
             </p>
           </div>
-          <div className="p-3 bg-blue-950 border border-blue-800/60 rounded-xl text-blue-400">
+          <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-700">
             <FileText className="w-6 h-6" />
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-md flex items-center justify-between">
+        <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-xs text-slate-400 font-medium">Total Bidders</p>
-            <h3 className="text-2xl font-black text-white mt-1">{bidders.length}</h3>
-            <p className="text-[11px] text-slate-400 flex items-center mt-1">
-              <span>3 Pre-analyzed bidders</span>
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Total Bidders</p>
+            <h3 className="text-2xl font-black text-slate-900 mt-1">{bidders.length}</h3>
+            <p className="text-[11px] text-slate-600 flex items-center mt-1">
+              <span>Analyzed Bidders</span>
             </p>
           </div>
-          <div className="p-3 bg-indigo-950 border border-indigo-800/60 rounded-xl text-indigo-400">
+          <div className="p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-indigo-700">
             <Users className="w-6 h-6" />
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-md flex items-center justify-between">
+        <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-xs text-slate-400 font-medium">Pending Reviews</p>
-            <h3 className="text-2xl font-black text-amber-400 mt-1">{pendingReviewCount}</h3>
-            <p className="text-[11px] text-amber-400 flex items-center mt-1">
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">Pending Reviews</p>
+            <h3 className="text-2xl font-black text-amber-600 mt-1">{pendingReviewCount}</h3>
+            <p className="text-[11px] text-amber-700 font-semibold flex items-center mt-1">
               <Clock className="w-3 h-3 mr-1" />
-              <span>Awaiting Officer Action</span>
+              <span>Awaiting Action</span>
             </p>
           </div>
-          <div className="p-3 bg-amber-950 border border-amber-800/60 rounded-xl text-amber-400">
+          <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700">
             <Clock className="w-6 h-6" />
           </div>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl shadow-md flex items-center justify-between">
+        <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-sm flex items-center justify-between">
           <div>
-            <p className="text-xs text-slate-400 font-medium">High Risk Bidders</p>
-            <h3 className="text-2xl font-black text-red-400 mt-1">{highRiskCount}</h3>
-            <p className="text-[11px] text-red-400 flex items-center mt-1">
+            <p className="text-xs text-slate-500 font-bold uppercase tracking-wider">High Risk Bidders</p>
+            <h3 className="text-2xl font-black text-red-600 mt-1">{highRiskCount}</h3>
+            <p className="text-[11px] text-red-700 font-semibold flex items-center mt-1">
               <AlertTriangle className="w-3 h-3 mr-1" />
-              <span>Critical Flags Found</span>
+              <span>Critical Flags</span>
             </p>
           </div>
-          <div className="p-3 bg-red-950 border border-red-800/60 rounded-xl text-red-400">
+          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700">
             <AlertTriangle className="w-6 h-6" />
           </div>
         </div>
@@ -156,13 +153,15 @@ export const Dashboard: React.FC = () => {
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Compliance Scores Bar Chart */}
-        <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg space-y-4">
-          <div className="flex items-center justify-between">
+        <div className="lg:col-span-2 bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
-              <h3 className="text-sm font-bold text-white">Bidder Compliance Scores Overview</h3>
-              <p className="text-xs text-slate-400">Transparent 100-point formula breakdown</p>
+              <h3 className="text-sm font-bold text-slate-900">Bidder Compliance Scores Overview</h3>
+              <p className="text-xs text-slate-500">Transparent 100-point formula breakdown</p>
             </div>
-            <span className="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded">Score Range (0-100)</span>
+            <span className="text-xs bg-slate-100 text-slate-700 font-medium px-2.5 py-1 rounded border border-slate-200">
+              Score Range (0-100)
+            </span>
           </div>
 
           <div className="h-64 w-full">
@@ -171,7 +170,7 @@ export const Dashboard: React.FC = () => {
                 <XAxis dataKey="name" stroke="#64748B" fontSize={11} />
                 <YAxis domain={[0, 100]} stroke="#64748B" fontSize={11} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0F172A', borderColor: '#334155', borderRadius: '8px', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CBD5E1', borderRadius: '8px', fontSize: '12px', color: '#0F172A' }}
                 />
                 <Bar dataKey="score" fill="#2563EB" radius={[6, 6, 0, 0]} />
               </BarChart>
@@ -180,10 +179,10 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {/* Risk Distribution Pie Chart */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg space-y-4">
-          <div>
-            <h3 className="text-sm font-bold text-white">Risk Distribution</h3>
-            <p className="text-xs text-slate-400">Classification across active bidders</p>
+        <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+          <div className="border-b border-slate-100 pb-3">
+            <h3 className="text-sm font-bold text-slate-900">Risk Distribution</h3>
+            <p className="text-xs text-slate-500">Classification across active bidders</p>
           </div>
 
           <div className="h-48 w-full flex items-center justify-center">
@@ -203,20 +202,20 @@ export const Dashboard: React.FC = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#0F172A', borderColor: '#334155', borderRadius: '8px', fontSize: '12px' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#CBD5E1', borderRadius: '8px', fontSize: '12px', color: '#0F172A' }}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="space-y-1.5 border-t border-slate-800 pt-3">
+          <div className="space-y-1.5 border-t border-slate-100 pt-3">
             {riskData.map((r) => (
               <div key={r.name} className="flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: r.color }}></span>
-                  <span className="text-slate-300 font-medium">{r.name}</span>
+                  <span className="text-slate-700 font-medium">{r.name}</span>
                 </div>
-                <span className="font-bold text-slate-200 font-mono">{r.value}</span>
+                <span className="font-bold text-slate-900 font-mono">{r.value}</span>
               </div>
             ))}
           </div>

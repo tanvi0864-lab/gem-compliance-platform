@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { Bidder } from '../types';
-import { Building2, Plus, FileText, ChevronRight, Award, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { FileText, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export const Bidders: React.FC = () => {
@@ -30,8 +30,8 @@ export const Bidders: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white">Bidder Profiles & Document Vault</h1>
-          <p className="text-xs text-slate-400">
+          <h1 className="text-xl font-bold text-slate-900">Bidder Profiles & Document Vault</h1>
+          <p className="text-xs text-slate-600 font-medium">
             Manage participating vendors, uploaded statutory certificates, and extracted document OCR data.
           </p>
         </div>
@@ -43,60 +43,60 @@ export const Bidders: React.FC = () => {
           <div
             key={b.id}
             onClick={() => navigate(`/bidders/${b.id}`)}
-            className="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-blue-500/50 p-5 rounded-xl transition-all shadow-lg space-y-4 flex flex-col justify-between"
+            className="group cursor-pointer bg-white border border-slate-200 hover:border-blue-600 p-5 rounded-2xl transition-all shadow-sm space-y-4 flex flex-col justify-between"
           >
             <div className="space-y-3">
               <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-9 h-9 rounded-lg bg-slate-800 text-blue-400 flex items-center justify-center font-bold text-xs border border-slate-700">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow">
                     {b.company_name.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-100 group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                       {b.company_name}
                     </h3>
-                    <span className="text-[10px] font-mono text-slate-400">{b.bidder_code}</span>
+                    <span className="text-[10px] font-mono font-bold text-slate-500">{b.bidder_code}</span>
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-blue-400 transition-colors" />
+                <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-blue-700 transition-colors" />
               </div>
 
               {/* Status Badges */}
               <div className="flex flex-wrap gap-1.5 text-[10px]">
-                <span className="bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-medium">
+                <span className="bg-slate-100 text-slate-700 border border-slate-200 px-2 py-0.5 rounded font-bold">
                   {b.bidder_type}
                 </span>
                 {b.is_msme && (
-                  <span className="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-semibold">
+                  <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded font-bold">
                     MSME Registered
                   </span>
                 )}
                 {b.is_startup && (
-                  <span className="bg-purple-950 text-purple-400 border border-purple-800 px-2 py-0.5 rounded font-semibold">
+                  <span className="bg-purple-100 text-purple-800 border border-purple-300 px-2 py-0.5 rounded font-bold">
                     Recognized Startup
                   </span>
                 )}
               </div>
 
               {/* Declarations */}
-              <div className="grid grid-cols-2 gap-2 text-xs bg-slate-950 p-2.5 rounded border border-slate-800">
+              <div className="grid grid-cols-2 gap-2 text-xs bg-slate-50 p-3 rounded-xl border border-slate-200 font-medium">
                 <div>
-                  <span className="text-slate-500 block text-[10px]">Declared Turnover</span>
-                  <span className="font-mono font-bold text-slate-200">₹{b.declared_turnover} Cr</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-bold">Declared Turnover</span>
+                  <span className="font-mono font-bold text-slate-900">₹{b.declared_turnover} Cr</span>
                 </div>
                 <div>
-                  <span className="text-slate-500 block text-[10px]">Local Content</span>
-                  <span className="font-mono font-bold text-amber-300">{b.declared_local_content}%</span>
+                  <span className="text-slate-500 block text-[10px] uppercase font-bold">Local Content</span>
+                  <span className="font-mono font-bold text-amber-800">{b.declared_local_content}%</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
-              <span className="flex items-center space-x-1">
-                <FileText className="w-3.5 h-3.5 text-blue-400" />
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
+              <span className="flex items-center space-x-1.5 font-medium">
+                <FileText className="w-4 h-4 text-blue-700" />
                 <span>{b.documents?.length || 0} Documents Uploaded</span>
               </span>
-              <span className="text-blue-400 font-medium group-hover:underline">View Profile</span>
+              <span className="text-blue-700 font-bold group-hover:underline">View 360° Profile</span>
             </div>
           </div>
         ))}

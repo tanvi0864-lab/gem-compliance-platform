@@ -26,8 +26,8 @@ export const AuditTrailPage: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold text-white">USP 3: Explainable Risk & Complete Audit Trail</h1>
-        <p className="text-xs text-slate-400">
+        <h1 className="text-xl font-bold text-slate-900">USP 3: Explainable Risk & Complete Audit Trail</h1>
+        <p className="text-xs text-slate-600">
           Immutable event log maintaining complete provenance for AI document extractions, government API verifications, and statutory officer decisions.
         </p>
       </div>

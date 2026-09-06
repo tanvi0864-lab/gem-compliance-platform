@@ -46,14 +46,14 @@ export const Tenders: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white">Tender Management & Requirement Mining</h1>
-          <p className="text-xs text-slate-400">
+          <h1 className="text-xl font-bold text-slate-900">Tender Management & Requirement Mining</h1>
+          <p className="text-xs text-slate-600">
             Upload tender document PDF to automatically extract dynamic compliance rules and eligibility checklists.
           </p>
         </div>
 
         <div className="flex items-center space-x-3">
-          <label className="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-2 shadow-lg shadow-blue-600/30 transition-all border border-blue-400/30">
+          <label className="cursor-pointer bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center space-x-2 shadow-sm transition-all">
             <Upload className="w-4 h-4" />
             <span>{isUploading ? 'Mining Requirements...' : 'Upload Tender PDF'}</span>
             <input type="file" accept=".pdf,.txt" onChange={handleFileUpload} className="hidden" />
@@ -67,22 +67,22 @@ export const Tenders: React.FC = () => {
           <div
             key={tender.id}
             onClick={() => navigate(`/tenders/${tender.id}`)}
-            className="group cursor-pointer bg-slate-900 border border-slate-800 hover:border-blue-500/50 p-5 rounded-xl transition-all shadow-lg space-y-4"
+            className="group cursor-pointer bg-white border border-slate-200 hover:border-blue-500 p-5 rounded-xl transition-all shadow-sm hover:shadow-md space-y-4"
           >
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800">
+                <span className="text-[10px] font-bold uppercase font-mono px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
                   {tender.tender_id}
                 </span>
-                <h3 className="text-sm font-bold text-slate-100 group-hover:text-blue-400 transition-colors">
+                <h3 className="text-sm font-bold text-slate-900 group-hover:text-blue-700 transition-colors">
                   {tender.title}
                 </h3>
-                <p className="text-xs text-slate-400 flex items-center">
-                  <Building className="w-3.5 h-3.5 mr-1 text-slate-500" />
+                <p className="text-xs text-slate-600 flex items-center">
+                  <Building className="w-3.5 h-3.5 mr-1 text-slate-400" />
                   <span>{tender.department}</span>
                 </p>
               </div>
-              <ChevronRight className="w-5 h-5 text-slate-600 group-hover:text-blue-400 transition-colors" />
+              <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
             </div>
 
             {/* Extracted Requirements Pills */}
@@ -94,23 +94,23 @@ export const Tenders: React.FC = () => {
                 {tender.requirements?.slice(0, 5).map((req) => (
                   <span
                     key={req.code}
-                    className="text-[10px] bg-slate-950 text-slate-300 px-2.5 py-1 rounded border border-slate-800 flex items-center space-x-1"
+                    className="text-[10px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded border border-slate-200 flex items-center space-x-1"
                   >
-                    <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                    <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                     <span>{req.title}</span>
                   </span>
                 ))}
                 {(tender.requirements?.length || 0) > 5 && (
-                  <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-1 rounded">
+                  <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded border border-slate-200">
                     +{(tender.requirements?.length || 0) - 5} more
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs pt-3 border-t border-slate-800 text-slate-400">
-              <div>Est. Value: <span className="font-bold text-slate-200 font-mono">₹{tender.estimated_value} Cr</span></div>
-              <div>Closing: <span className="font-mono text-slate-300">{tender.closing_date || '2026-09-30'}</span></div>
+            <div className="flex items-center justify-between text-xs pt-3 border-t border-slate-100 text-slate-600">
+              <div>Est. Value: <span className="font-bold text-slate-900 font-mono">₹{tender.estimated_value} Cr</span></div>
+              <div>Closing: <span className="font-mono text-slate-700">{tender.closing_date || '2026-09-30'}</span></div>
             </div>
           </div>
         ))}
