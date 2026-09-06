@@ -140,7 +140,7 @@ export const BidderDetail: React.FC = () => {
                   <span className="bg-emerald-950 text-emerald-400 border border-emerald-800 px-2.5 py-0.5 rounded-full font-semibold">
                     {doc.status}
                   </span>
-                  <p className="text-[10px] text-slate-500 mt-1">{Math.round(doc.file_size / 1024)} KB</p>
+                  <p className="text-[10px] text-slate-500 mt-1">{Math.round((doc.file_size || 250000) / 1024)} KB</p>
                 </div>
               </div>
 
