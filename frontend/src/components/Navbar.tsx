@@ -124,14 +124,24 @@ export const Navbar: React.FC<NavbarProps> = ({ currentRole, onRoleChange, onLoa
             </div>
           )}
 
-          {/* User Profile */}
-          <div className="flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700 hidden lg:flex">
-            <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-black">
-              {currentRole === 'OFFICER' ? 'PO' : currentRole === 'BIDDER' ? 'BD' : 'PB'}
+          {/* User Profile / Login Link */}
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => onRoleChange('OFFICER')}
+              className="flex items-center space-x-2 bg-blue-700 hover:bg-blue-600 px-3 py-1.5 rounded-xl border border-blue-400/40 text-white font-bold text-xs shadow-sm transition-all"
+            >
+              <User className="w-3.5 h-3.5" />
+              <span>Govt / Enterprise Login</span>
+            </button>
+
+            <div className="hidden lg:flex items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
+              <div className="w-6 h-6 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center text-[10px] font-black">
+                {currentRole === 'OFFICER' ? 'PO' : currentRole === 'BIDDER' ? 'BD' : 'PB'}
+              </div>
+              <span className="text-xs font-semibold text-slate-200">
+                {currentRole === 'OFFICER' ? 'rajesh.kumar@gem.gov.in' : currentRole === 'BIDDER' ? 'bids@bharattech.com' : 'Public Transparency'}
+              </span>
             </div>
-            <span className="text-xs font-semibold text-slate-200">
-              {currentRole === 'OFFICER' ? 'Rajesh Kumar (PO-8821)' : currentRole === 'BIDDER' ? 'Bharat Tech Portal' : 'Public Viewer'}
-            </span>
           </div>
         </div>
       </div>

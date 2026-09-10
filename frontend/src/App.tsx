@@ -19,20 +19,27 @@ import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 import { BidderPortal } from './pages/BidderPortal';
 import { PublicTransparency } from './pages/PublicTransparency';
+import { Login } from './pages/Login';
 
 const AppLayout: React.FC = () => {
   const [currentRole, setCurrentRole] = useState<UserRole>('OFFICER');
+  const [userEmail, setUserEmail] = useState<string>('rajesh.kumar@gem.gov.in');
   const navigate = useNavigate();
 
   const handleRoleChange = (role: UserRole) => {
     setCurrentRole(role);
     if (role === 'OFFICER') {
-      navigate('/');
+      navigate('/login');
     } else if (role === 'BIDDER') {
       navigate('/bidder-dashboard');
     } else if (role === 'PUBLIC') {
       navigate('/public-transparency');
     }
+  };
+
+  const handleLoginSuccess = (role: UserRole, email: string) => {
+    setCurrentRole(role);
+    setUserEmail(email);
   };
 
   const handleLoadDemoScenario = (scenarioId: number) => {
@@ -61,6 +68,9 @@ const AppLayout: React.FC = () => {
 
         <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full custom-scrollbar">
           <Routes>
+            {/* Auth Login Route */}
+            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+
             {/* Officer Routes */}
             <Route path="/" element={<Dashboard />} />
             <Route path="/tenders" element={<Tenders />} />
