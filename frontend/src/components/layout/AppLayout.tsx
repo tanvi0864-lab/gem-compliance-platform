@@ -3,7 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores/auth'
 import {
   LayoutDashboard, FileText, Upload, CheckSquare, Users,
-  ClipboardList, Shield, LogOut, ChevronRight, Bell
+  ClipboardList, Shield, LogOut, ChevronRight, Bell,
+  FileSpreadsheet, AlertTriangle, FileSearch, Share2, Sliders, History
 } from 'lucide-react'
 import { clsx } from 'clsx'
 
@@ -23,10 +24,17 @@ const bidderNav: NavItem[] = [
 ]
 
 const poNav: NavItem[] = [
-  { label: 'Dashboard',       to: '/po',              icon: LayoutDashboard },
-  { label: 'Review Queue',    to: '/po/queue',        icon: ClipboardList },
-  { label: 'Bidder 360°',    to: '/po/bidders',      icon: Users },
-  { label: 'Audit Log',       to: '/po/audit',        icon: Shield },
+  { label: '1. Dashboard',            to: '/po',                icon: LayoutDashboard },
+  { label: '2. Tenders',              to: '/po/tenders',        icon: FileText },
+  { label: '3. Bid Evaluation',       to: '/po/queue',          icon: ClipboardList },
+  { label: '4. Verification',         to: '/po/verification',   icon: CheckSquare },
+  { label: '5. Bidder Documents',     to: '/po/documents',      icon: Upload },
+  { label: '6. Compliance Reports',   to: '/po/reports',        icon: FileSpreadsheet },
+  { label: '7. Behavioral Risk',      to: '/po/behavioral-risk',icon: AlertTriangle },
+  { label: '8. Digital Forensics',    to: '/po/forensics',      icon: FileSearch },
+  { label: '9. Intelligence Graph',   to: '/po/network-graph',  icon: Share2 },
+  { label: '10. What-If Simulator',   to: '/po/simulator',      icon: Sliders },
+  { label: '11. Audit Log',           to: '/po/audit',          icon: History },
 ]
 
 function NavLink({ item }: { item: NavItem }) {
