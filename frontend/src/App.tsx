@@ -82,21 +82,21 @@ export default function App() {
         <Route path="/bidder/profile" element={<RequireAuth role="BIDDER"><BidderProfile /></RequireAuth>} />
         <Route path="/bidder/settings" element={<RequireAuth role="BIDDER"><BidderSettings /></RequireAuth>} />
 
-        {/* Procurement Officer (10 Core Capabilities) */}
-        <Route path="/po" element={<RequireAuth role="PROCUREMENT_OFFICER"><PODashboard /></RequireAuth>} />
-        <Route path="/po/tenders" element={<RequireAuth role="PROCUREMENT_OFFICER"><POTenders /></RequireAuth>} />
-        <Route path="/po/queue" element={<RequireAuth role="PROCUREMENT_OFFICER"><ReviewQueue /></RequireAuth>} />
-        <Route path="/po/queue/:tenderId" element={<RequireAuth role="PROCUREMENT_OFFICER"><ReviewQueue /></RequireAuth>} />
-        <Route path="/po/verification" element={<RequireAuth role="PROCUREMENT_OFFICER"><ComplianceVerification /></RequireAuth>} />
-        <Route path="/po/documents" element={<RequireAuth role="PROCUREMENT_OFFICER"><POBidderDocuments /></RequireAuth>} />
-        <Route path="/po/reports" element={<RequireAuth role="PROCUREMENT_OFFICER"><ComplianceReports /></RequireAuth>} />
-        <Route path="/po/behavioral-risk" element={<RequireAuth role="PROCUREMENT_OFFICER"><BehavioralRisk /></RequireAuth>} />
-        <Route path="/po/forensics" element={<RequireAuth role="PROCUREMENT_OFFICER"><DocumentForensics /></RequireAuth>} />
-        <Route path="/po/network-graph" element={<RequireAuth role="PROCUREMENT_OFFICER"><CrossBidderGraph /></RequireAuth>} />
-        <Route path="/po/simulator" element={<RequireAuth role="PROCUREMENT_OFFICER"><WhatIfSimulator /></RequireAuth>} />
-        <Route path="/po/bidders" element={<RequireAuth role="PROCUREMENT_OFFICER"><ReviewQueue /></RequireAuth>} />
-        <Route path="/po/bidders/:bidderId" element={<RequireAuth role={['PROCUREMENT_OFFICER','ADMIN']}><Bidder360 /></RequireAuth>} />
-        <Route path="/po/audit" element={<RequireAuth role="PROCUREMENT_OFFICER"><AuditLog /></RequireAuth>} />
+        {/* Procurement & System Oversight */}
+        <Route path="/po" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><PODashboard /></RequireAuth>} />
+        <Route path="/po/tenders" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><POTenders /></RequireAuth>} />
+        <Route path="/po/queue" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><ReviewQueue /></RequireAuth>} />
+        <Route path="/po/queue/:tenderId" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><ReviewQueue /></RequireAuth>} />
+        <Route path="/po/verification" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><ComplianceVerification /></RequireAuth>} />
+        <Route path="/po/documents" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><POBidderDocuments /></RequireAuth>} />
+        <Route path="/po/reports" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><ComplianceReports /></RequireAuth>} />
+        <Route path="/po/behavioral-risk" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><BehavioralRisk /></RequireAuth>} />
+        <Route path="/po/forensics" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><DocumentForensics /></RequireAuth>} />
+        <Route path="/po/network-graph" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><CrossBidderGraph /></RequireAuth>} />
+        <Route path="/po/simulator" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><WhatIfSimulator /></RequireAuth>} />
+        <Route path="/po/bidders" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><ReviewQueue /></RequireAuth>} />
+        <Route path="/po/bidders/:bidderId" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><Bidder360 /></RequireAuth>} />
+        <Route path="/po/audit" element={<RequireAuth role={['PROCUREMENT_OFFICER', 'ADMIN']}><AuditLog /></RequireAuth>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

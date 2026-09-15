@@ -12,8 +12,17 @@ import { clsx } from 'clsx'
 interface NavItem { label: string; to: string; icon: any }
 
 const adminNav: NavItem[] = [
-  { label: 'Dashboard',    to: '/admin',           icon: LayoutDashboard },
-  { label: 'Tenders',      to: '/admin/tenders',   icon: FileText },
+  { label: '1. Executive Dashboard', to: '/admin', icon: LayoutDashboard },
+  { label: '2. Tender Management', to: '/admin/tenders', icon: FileText },
+  { label: '3. Bid Evaluation Queue', to: '/po/queue', icon: ClipboardList },
+  { label: '4. Verification Engine', to: '/po/verification', icon: CheckSquare },
+  { label: '5. Bidder Documents', to: '/po/documents', icon: Upload },
+  { label: '6. Compliance Reports', to: '/po/reports', icon: FileSpreadsheet },
+  { label: '7. Behavioral & Risk Flags', to: '/po/behavioral-risk', icon: AlertTriangle },
+  { label: '8. Digital Forensics', to: '/po/forensics', icon: FileSearch },
+  { label: '9. Intelligence Graph', to: '/po/network-graph', icon: Share2 },
+  { label: '10. What-If Simulator', to: '/po/simulator', icon: Sliders },
+  { label: '11. System Audit Log', to: '/po/audit', icon: History },
 ]
 
 const bidderNav: NavItem[] = [
