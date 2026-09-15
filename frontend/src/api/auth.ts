@@ -122,12 +122,14 @@ export const authApi = {
       // Seamless offline / Vercel fallback
       const profile = getMockProfile(data.email)
       const token = `mock-token-${Date.now()}`
+      localStorage.setItem('bidnex_token', token)
+      localStorage.setItem('bidnex_user', JSON.stringify(profile))
       return {
         access_token: token,
         token_type: 'bearer',
         role: profile.role,
         user_id: profile.id,
-        full_name: profile.full_name,
+        full_name: profile.full_name || profile.email,
         email: profile.email,
       }
     }
@@ -139,17 +141,21 @@ export const authApi = {
       return res.data
     } catch {
       // Seamless offline / Vercel fallback
+      const nameParts = data.email.split('@')[0].split('.')
+      const autoName = nameParts.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ') || 'Registered Partner'
       const newUser: UserProfile = {
         id: `usr-reg-${Date.now()}`,
         email: data.email.toLowerCase().trim(),
         role: data.role || 'BIDDER',
-        full_name: data.full_name || 'Registered Partner',
+        full_name: data.full_name || autoName,
         organisation: data.organisation || 'Registered Enterprise',
         is_active: true,
         is_banned: false,
       }
       saveCustomUser(newUser)
       const token = `mock-token-reg-${Date.now()}`
+      localStorage.setItem('bidnex_token', token)
+      localStorage.setItem('bidnex_user', JSON.stringify(newUser))
       return {
         access_token: token,
         token_type: 'bearer',
@@ -172,7 +178,8 @@ export const authApi = {
       const storedUser = localStorage.getItem('bidnex_user')
       if (storedUser) {
         try {
-          return JSON.parse(storedUser)
+          const parsed = JSON.parse(storedUser)
+          if (parsed && parsed.full_name) return parsed
         } catch {}
       }
       return getMockProfile('officer@cpcl.gov.in')

@@ -19,10 +19,12 @@ export default function Login() {
     try {
       const token = await authApi.login({ email, password })
       const user = await authApi.me(token.access_token)
-      setAuth(token.access_token, user)
-      toast.success(`Welcome, ${user.full_name}!`)
-      if (user.role === 'ADMIN') navigate('/admin')
-      else if (user.role === 'PROCUREMENT_OFFICER') navigate('/po')
+      const activeUser = user || { full_name: token.full_name || email, role: token.role }
+      setAuth(token.access_token, activeUser as any)
+      const displayName = activeUser.full_name || token.full_name || email.split('@')[0] || 'User'
+      toast.success(`Welcome, ${displayName}!`)
+      if (activeUser.role === 'ADMIN') navigate('/admin')
+      else if (activeUser.role === 'PROCUREMENT_OFFICER') navigate('/po')
       else navigate('/bidder')
     } catch (err: any) {
       const msg = err.response?.data?.detail ?? 'Login failed'
