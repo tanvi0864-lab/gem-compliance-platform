@@ -117,6 +117,9 @@ export const authApi = {
   login: async (data: LoginRequest): Promise<TokenResponse> => {
     try {
       const res = await api.post<TokenResponse>('/auth/login', data)
+      if (typeof res.data !== 'object' || !res.data || !res.data.access_token) {
+        throw new Error('Invalid backend token response')
+      }
       return res.data
     } catch {
       // Seamless offline / Vercel fallback
@@ -138,6 +141,9 @@ export const authApi = {
   register: async (data: RegisterRequest): Promise<TokenResponse> => {
     try {
       const res = await api.post<TokenResponse>('/auth/register', data)
+      if (typeof res.data !== 'object' || !res.data || !res.data.access_token) {
+        throw new Error('Invalid backend register response')
+      }
       return res.data
     } catch {
       // Seamless offline / Vercel fallback
@@ -172,6 +178,9 @@ export const authApi = {
       const res = await api.get<UserProfile>('/auth/me', accessToken ? {
         headers: { Authorization: `Bearer ${accessToken}` },
       } : undefined)
+      if (typeof res.data !== 'object' || !res.data || !res.data.role) {
+        throw new Error('Invalid user profile response')
+      }
       return res.data
     } catch {
       // Seamless offline / Vercel fallback
@@ -179,7 +188,7 @@ export const authApi = {
       if (storedUser) {
         try {
           const parsed = JSON.parse(storedUser)
-          if (parsed && parsed.full_name) return parsed
+          if (parsed && parsed.role && parsed.full_name) return parsed
         } catch {}
       }
       return getMockProfile('officer@cpcl.gov.in')

@@ -19,14 +19,31 @@ export default function Login() {
     try {
       const token = await authApi.login({ email, password })
       const user = await authApi.me(token.access_token)
-      const activeUser = user || { full_name: token?.full_name || email, role: token?.role }
+      let role = user?.role || token?.role
+      if (!role) {
+        const lower = email.toLowerCase()
+        if (lower.includes('admin')) role = 'ADMIN'
+        else if (lower.includes('officer') || lower.endsWith('.gov.in') || lower.endsWith('.nic.in')) role = 'PROCUREMENT_OFFICER'
+        else role = 'BIDDER'
+      }
+
+      const activeUser = (user && user.role) ? user : {
+        id: token.user_id || `usr-${Date.now()}`,
+        email: token.email || email,
+        role: role,
+        full_name: token.full_name || user?.full_name || email.split('@')[0],
+        organisation: role === 'BIDDER' ? 'Enterprise Bidder Partner' : 'Ministry Procurement Department',
+        is_active: true,
+        is_banned: false,
+      }
       setAuth(token.access_token, activeUser as any)
       const rawName = activeUser?.full_name || token?.full_name || email?.split('@')[0] || 'User'
       const displayName = (rawName && rawName !== 'undefined') ? rawName : (email?.split('@')[0] || 'User')
       toast.success(`Welcome, ${displayName}!`)
-      if (activeUser.role === 'ADMIN') navigate('/admin')
-      else if (activeUser.role === 'PROCUREMENT_OFFICER') navigate('/po')
-      else navigate('/bidder')
+
+      if (role === 'ADMIN') navigate('/admin', { replace: true })
+      else if (role === 'PROCUREMENT_OFFICER') navigate('/po', { replace: true })
+      else navigate('/bidder', { replace: true })
     } catch (err: any) {
       const msg = err.response?.data?.detail ?? 'Login failed'
       toast.error(msg)

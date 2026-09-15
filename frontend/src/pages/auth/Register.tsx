@@ -26,11 +26,21 @@ export default function Register() {
       const { confirmPassword, ...payload } = form
       const token = await authApi.register(payload)
       const user = await authApi.me(token.access_token)
-      setAuth(token.access_token, user)
+      const role = user?.role || token?.role || payload.role || 'BIDDER'
+      const activeUser = (user && user.role) ? user : {
+        id: token.user_id || `usr-${Date.now()}`,
+        email: token.email || payload.email,
+        role: role,
+        full_name: token.full_name || payload.full_name || 'Registered Partner',
+        organisation: payload.organisation || 'Registered Enterprise',
+        is_active: true,
+        is_banned: false,
+      }
+      setAuth(token.access_token, activeUser as any)
       toast.success('Account created successfully!')
-      if (user.role === 'ADMIN') navigate('/admin')
-      else if (user.role === 'PROCUREMENT_OFFICER') navigate('/po')
-      else navigate('/bidder')
+      if (role === 'ADMIN') navigate('/admin', { replace: true })
+      else if (role === 'PROCUREMENT_OFFICER') navigate('/po', { replace: true })
+      else navigate('/bidder', { replace: true })
     } catch (err: any) {
       toast.error(err.response?.data?.detail ?? 'Registration failed')
     } finally {

@@ -14,7 +14,15 @@ api.interceptors.request.use((config) => {
 })
 
 api.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    // If response is HTML string (e.g. Vercel SPA rewrite fallback for missing backend API), treat as API error so fallback triggers
+    if (typeof res.data === 'string' && res.data.trim().toLowerCase().startsWith('<!doctype')) {
+      const error: any = new Error('Backend API unavailable')
+      error.response = { status: 404, data: { detail: 'Backend API unavailable' } }
+      return Promise.reject(error)
+    }
+    return res
+  },
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem('bidnex_token')
