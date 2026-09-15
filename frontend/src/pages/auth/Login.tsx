@@ -100,13 +100,36 @@ export default function Login() {
             </Link>
           </p>
 
-          {/* Demo credentials */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
-            <p className="text-xs font-semibold text-gray-700 mb-2">Demo Credentials</p>
-            <div className="space-y-1 text-xs text-gray-600">
-              <div className="flex justify-between"><span>Admin:</span><span className="font-mono">admin@cpcl.gov.in / Admin@123</span></div>
-              <div className="flex justify-between"><span>PO:</span><span className="font-mono">officer@cpcl.gov.in / Officer@123</span></div>
-              <div className="flex justify-between"><span>Bidder:</span><span className="font-mono">alpha@alphaindia.in / Bidder@123</span></div>
+          {/* Quick Demo Logins */}
+          <div className="mt-6 p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-2">
+            <p className="text-xs font-semibold text-gray-700">Quick Demo Accounts (1-Click Fill &amp; Sign In)</p>
+            <div className="grid grid-cols-3 gap-2 text-xs">
+              <button
+                type="button"
+                onClick={() => { setEmail('admin@cpcl.gov.in'); setPassword('Admin@123') }}
+                className="p-2 bg-white border border-gray-200 hover:border-blue-400 hover:bg-blue-50 rounded-lg text-center transition-colors"
+              >
+                <span className="font-bold text-gray-900 block">Administrator</span>
+                <span className="text-[10px] text-gray-500 font-mono">admin@cpcl.gov.in</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setEmail('officer@cpcl.gov.in'); setPassword('Officer@123') }}
+                className="p-2 bg-white border border-gray-200 hover:border-purple-400 hover:bg-purple-50 rounded-lg text-center transition-colors"
+              >
+                <span className="font-bold text-gray-900 block">PO Officer</span>
+                <span className="text-[10px] text-gray-500 font-mono">officer@cpcl.gov.in</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setEmail('alpha@alphaindia.in'); setPassword('Bidder@123') }}
+                className="p-2 bg-white border border-gray-200 hover:border-emerald-400 hover:bg-emerald-50 rounded-lg text-center transition-colors"
+              >
+                <span className="font-bold text-gray-900 block">Bidder Partner</span>
+                <span className="text-[10px] text-gray-500 font-mono">alpha@alphaindia.in</span>
+              </button>
             </div>
           </div>
         </div>
