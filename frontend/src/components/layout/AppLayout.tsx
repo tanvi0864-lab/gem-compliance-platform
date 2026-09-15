@@ -4,7 +4,8 @@ import { useAuthStore } from '@/stores/auth'
 import {
   LayoutDashboard, FileText, Upload, CheckSquare, Users,
   ClipboardList, Shield, LogOut, ChevronRight, Bell,
-  FileSpreadsheet, AlertTriangle, FileSearch, Share2, Sliders, History
+  FileSpreadsheet, AlertTriangle, FileSearch, Share2, Sliders, History,
+  AlertCircle, User, Settings as SettingsIcon
 } from 'lucide-react'
 import { clsx } from 'clsx'
 
@@ -16,11 +17,15 @@ const adminNav: NavItem[] = [
 ]
 
 const bidderNav: NavItem[] = [
-  { label: 'Dashboard',     to: '/bidder',              icon: LayoutDashboard },
-  { label: 'My Tenders',    to: '/bidder/tenders',      icon: FileText },
-  { label: 'My Documents',  to: '/bidder/documents',    icon: Upload },
-  { label: 'Submit Bid',    to: '/bidder/submit',       icon: CheckSquare },
-  { label: 'My Status',     to: '/bidder/status',       icon: Shield },
+  { label: '1. Dashboard',          to: '/bidder',              icon: LayoutDashboard },
+  { label: '2. My Tenders',         to: '/bidder/tenders',      icon: FileText },
+  { label: '3. My Documents',       to: '/bidder/documents',    icon: Upload },
+  { label: '4. Compliance Status',   to: '/bidder/status',       icon: Shield },
+  { label: '5. Action Required',    to: '/bidder/actions',      icon: AlertCircle },
+  { label: '6. Submissions',        to: '/bidder/submissions',  icon: CheckSquare },
+  { label: '7. Notifications',      to: '/bidder/notifications',icon: Bell },
+  { label: '8. Profile',            to: '/bidder/profile',      icon: User },
+  { label: '9. Settings',           to: '/bidder/settings',     icon: SettingsIcon },
 ]
 
 const poNav: NavItem[] = [

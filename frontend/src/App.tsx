@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react'
 import { useAuthStore } from '@/stores/auth'
 
 // Auth
@@ -11,11 +11,16 @@ import TenderList from '@/pages/admin/TenderList'
 import TenderForm from '@/pages/admin/TenderForm'
 import TenderDetail from '@/pages/admin/TenderDetail'
 
-// Bidder
+// Bidder (9 Approved Capabilities)
 import BidderDashboard from '@/pages/bidder/BidderDashboard'
 import BidderTenders from '@/pages/bidder/BidderTenders'
 import MyDocuments from '@/pages/bidder/MyDocuments'
 import BidderStatus from '@/pages/bidder/BidderStatus'
+import ActionRequired from '@/pages/bidder/ActionRequired'
+import BidderSubmissions from '@/pages/bidder/BidderSubmissions'
+import BidderNotifications from '@/pages/bidder/BidderNotifications'
+import BidderProfile from '@/pages/bidder/BidderProfile'
+import BidderSettings from '@/pages/bidder/BidderSettings'
 
 // PO
 import PODashboard from '@/pages/po/PODashboard'
@@ -65,12 +70,17 @@ export default function App() {
         <Route path="/admin/tenders/:id" element={<RequireAuth role={['ADMIN', 'PROCUREMENT_OFFICER']}><TenderDetail /></RequireAuth>} />
         <Route path="/admin/tenders/:id/bidder/:bidderId" element={<RequireAuth role={['ADMIN', 'PROCUREMENT_OFFICER']}><Bidder360 /></RequireAuth>} />
 
-        {/* Bidder */}
+        {/* Bidder (Exactly 9 Approved Pages) */}
         <Route path="/bidder" element={<RequireAuth role="BIDDER"><BidderDashboard /></RequireAuth>} />
         <Route path="/bidder/tenders" element={<RequireAuth role="BIDDER"><BidderTenders /></RequireAuth>} />
+        <Route path="/bidder/tenders/:id" element={<RequireAuth role="BIDDER"><BidderTenders /></RequireAuth>} />
         <Route path="/bidder/documents" element={<RequireAuth role="BIDDER"><MyDocuments /></RequireAuth>} />
-        <Route path="/bidder/submit" element={<RequireAuth role="BIDDER"><BidderTenders /></RequireAuth>} />
         <Route path="/bidder/status" element={<RequireAuth role="BIDDER"><BidderStatus /></RequireAuth>} />
+        <Route path="/bidder/actions" element={<RequireAuth role="BIDDER"><ActionRequired /></RequireAuth>} />
+        <Route path="/bidder/submissions" element={<RequireAuth role="BIDDER"><BidderSubmissions /></RequireAuth>} />
+        <Route path="/bidder/notifications" element={<RequireAuth role="BIDDER"><BidderNotifications /></RequireAuth>} />
+        <Route path="/bidder/profile" element={<RequireAuth role="BIDDER"><BidderProfile /></RequireAuth>} />
+        <Route path="/bidder/settings" element={<RequireAuth role="BIDDER"><BidderSettings /></RequireAuth>} />
 
         {/* Procurement Officer (10 Core Capabilities) */}
         <Route path="/po" element={<RequireAuth role="PROCUREMENT_OFFICER"><PODashboard /></RequireAuth>} />
