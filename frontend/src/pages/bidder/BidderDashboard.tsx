@@ -21,8 +21,10 @@ export default function BidderDashboard() {
     <AppLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome, {user?.full_name?.split(' ')[0]}!</h1>
-          <p className="text-gray-500 text-sm">{user?.organisation}</p>
+          <h1 className="text-2xl font-bold text-gray-900">
+            Welcome, {(user?.full_name && user?.full_name !== 'undefined') ? user.full_name.split(' ')[0] : (user?.email?.split('@')[0] || 'Bidder')}!
+          </h1>
+          <p className="text-gray-500 text-sm">{user?.organisation || 'Registered Partner'}</p>
         </div>
 
         {/* Stats */}

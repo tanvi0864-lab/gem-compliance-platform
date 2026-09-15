@@ -19,9 +19,10 @@ export default function Login() {
     try {
       const token = await authApi.login({ email, password })
       const user = await authApi.me(token.access_token)
-      const activeUser = user || { full_name: token.full_name || email, role: token.role }
+      const activeUser = user || { full_name: token?.full_name || email, role: token?.role }
       setAuth(token.access_token, activeUser as any)
-      const displayName = activeUser.full_name || token.full_name || email.split('@')[0] || 'User'
+      const rawName = activeUser?.full_name || token?.full_name || email?.split('@')[0] || 'User'
+      const displayName = (rawName && rawName !== 'undefined') ? rawName : (email?.split('@')[0] || 'User')
       toast.success(`Welcome, ${displayName}!`)
       if (activeUser.role === 'ADMIN') navigate('/admin')
       else if (activeUser.role === 'PROCUREMENT_OFFICER') navigate('/po')
