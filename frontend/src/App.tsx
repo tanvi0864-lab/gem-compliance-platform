@@ -1,108 +1,80 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { Navbar } from './components/Navbar';
-import { Sidebar } from './components/Sidebar';
-import { UserRole } from './types';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useAuthStore } from '@/stores/auth'
 
-// Pages
-import { Dashboard } from './pages/Dashboard';
-import { Tenders } from './pages/Tenders';
-import { TenderDetail } from './pages/TenderDetail';
-import { Bidders } from './pages/Bidders';
-import { BidderDetail } from './pages/BidderDetail';
-import { Verification } from './pages/Verification';
-import { DocumentVerification } from './pages/DocumentVerification';
-import { Compliance } from './pages/Compliance';
-import { BidSessionIntelligencePage } from './pages/BidSessionIntelligence';
-import { AuditTrailPage } from './pages/AuditTrail';
-import { Reports } from './pages/Reports';
-import { Settings } from './pages/Settings';
-import { BidderPortal } from './pages/BidderPortal';
-import { PublicTransparency } from './pages/PublicTransparency';
-import { Login } from './pages/Login';
+// Auth
+import Login from '@/pages/auth/Login'
+import Register from '@/pages/auth/Register'
 
-const AppLayout: React.FC = () => {
-  const [currentRole, setCurrentRole] = useState<UserRole>('OFFICER');
-  const [userEmail, setUserEmail] = useState<string>('rajesh.kumar@gem.gov.in');
-  const navigate = useNavigate();
+// Admin
+import AdminDashboard from '@/pages/admin/AdminDashboard'
+import TenderList from '@/pages/admin/TenderList'
+import TenderForm from '@/pages/admin/TenderForm'
+import TenderDetail from '@/pages/admin/TenderDetail'
 
-  const handleRoleChange = (role: UserRole) => {
-    setCurrentRole(role);
-    if (role === 'OFFICER') {
-      navigate('/login');
-    } else if (role === 'BIDDER') {
-      navigate('/bidder-dashboard');
-    } else if (role === 'PUBLIC') {
-      navigate('/public-transparency');
-    }
-  };
+// Bidder
+import BidderDashboard from '@/pages/bidder/BidderDashboard'
+import BidderTenders from '@/pages/bidder/BidderTenders'
+import MyDocuments from '@/pages/bidder/MyDocuments'
+import BidderStatus from '@/pages/bidder/BidderStatus'
 
-  const handleLoginSuccess = (role: UserRole, email: string) => {
-    setCurrentRole(role);
-    setUserEmail(email);
-  };
+// PO
+import PODashboard from '@/pages/po/PODashboard'
+import ReviewQueue from '@/pages/po/ReviewQueue'
+import Bidder360 from '@/pages/po/Bidder360'
+import AuditLog from '@/pages/po/AuditLog'
 
-  const handleLoadDemoScenario = (scenarioId: number) => {
-    setCurrentRole('OFFICER');
-    if (scenarioId === 1) {
-      navigate('/bidders/1'); // Bharat Tech (Compliant)
-    } else if (scenarioId === 2) {
-      navigate('/bidders/2'); // Nova Systems (Missing MAF)
-    } else if (scenarioId === 3) {
-      navigate('/bidders/3'); // Apex Cyber (Cancelled GST)
-    } else if (scenarioId === 4) {
-      navigate('/risk-intelligence'); // Bot Telemetry
-    }
-  };
+function RequireAuth({ children, role }: { children: JSX.Element; role?: string | string[] }) {
+  const { isAuthenticated, user } = useAuthStore()
+  if (!isAuthenticated) return <Navigate to="/login" replace />
+  if (role) {
+    const roles = Array.isArray(role) ? role : [role]
+    if (!roles.includes(user?.role ?? '')) return <Navigate to="/login" replace />
+  }
+  return children
+}
 
-  return (
-    <div className="min-h-screen bg-slate-100 text-slate-900 flex flex-col font-sans">
-      <Navbar 
-        currentRole={currentRole}
-        onRoleChange={handleRoleChange}
-        onLoadDemoScenario={handleLoadDemoScenario} 
-      />
-
-      <div className="flex flex-1">
-        <Sidebar currentRole={currentRole} />
-
-        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full custom-scrollbar">
-          <Routes>
-            {/* Auth Login Route */}
-            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-
-            {/* Officer Routes */}
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/tenders" element={<Tenders />} />
-            <Route path="/tenders/:id" element={<TenderDetail />} />
-            <Route path="/bidders" element={<Bidders />} />
-            <Route path="/bidders/:id" element={<BidderDetail />} />
-            <Route path="/verification" element={<Verification />} />
-            <Route path="/document-verification" element={<DocumentVerification />} />
-            <Route path="/compliance" element={<Compliance />} />
-            <Route path="/risk-intelligence" element={<BidSessionIntelligencePage />} />
-            <Route path="/audit" element={<AuditTrailPage />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/settings" element={<Settings />} />
-
-            {/* Bidder Self-Service Portal Routes */}
-            <Route path="/bidder-dashboard" element={<BidderPortal />} />
-            <Route path="/bidder-upload" element={<BidderPortal />} />
-            <Route path="/bidder-status" element={<BidderPortal />} />
-
-            {/* Public Transparency Citizen Portal Route */}
-            <Route path="/public-transparency" element={<PublicTransparency />} />
-          </Routes>
-        </main>
-      </div>
-    </div>
-  );
-};
+function HomeRedirect() {
+  const { user, isAuthenticated } = useAuthStore()
+  if (!isAuthenticated) return <Navigate to="/login" replace />
+  if (user?.role === 'ADMIN') return <Navigate to="/admin" replace />
+  if (user?.role === 'PROCUREMENT_OFFICER') return <Navigate to="/po" replace />
+  return <Navigate to="/bidder" replace />
+}
 
 export default function App() {
   return (
-    <Router>
-      <AppLayout />
-    </Router>
-  );
+    <BrowserRouter>
+      <Routes>
+        {/* Public */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<HomeRedirect />} />
+
+        {/* Admin */}
+        <Route path="/admin" element={<RequireAuth role="ADMIN"><AdminDashboard /></RequireAuth>} />
+        <Route path="/admin/tenders" element={<RequireAuth role="ADMIN"><TenderList /></RequireAuth>} />
+        <Route path="/admin/tenders/new" element={<RequireAuth role="ADMIN"><TenderForm /></RequireAuth>} />
+        <Route path="/admin/tenders/:id" element={<RequireAuth role="ADMIN"><TenderDetail /></RequireAuth>} />
+        <Route path="/admin/tenders/:id/bidder/:bidderId" element={<RequireAuth role="ADMIN"><Bidder360 /></RequireAuth>} />
+
+        {/* Bidder */}
+        <Route path="/bidder" element={<RequireAuth role="BIDDER"><BidderDashboard /></RequireAuth>} />
+        <Route path="/bidder/tenders" element={<RequireAuth role="BIDDER"><BidderTenders /></RequireAuth>} />
+        <Route path="/bidder/documents" element={<RequireAuth role="BIDDER"><MyDocuments /></RequireAuth>} />
+        <Route path="/bidder/submit" element={<RequireAuth role="BIDDER"><BidderTenders /></RequireAuth>} />
+        <Route path="/bidder/status" element={<RequireAuth role="BIDDER"><BidderStatus /></RequireAuth>} />
+
+        {/* PO */}
+        <Route path="/po" element={<RequireAuth role="PROCUREMENT_OFFICER"><PODashboard /></RequireAuth>} />
+        <Route path="/po/queue" element={<RequireAuth role="PROCUREMENT_OFFICER"><ReviewQueue /></RequireAuth>} />
+        <Route path="/po/queue/:tenderId" element={<RequireAuth role="PROCUREMENT_OFFICER"><ReviewQueue /></RequireAuth>} />
+        <Route path="/po/bidders" element={<RequireAuth role="PROCUREMENT_OFFICER"><ReviewQueue /></RequireAuth>} />
+        <Route path="/po/bidders/:bidderId" element={<RequireAuth role={['PROCUREMENT_OFFICER','ADMIN']}><Bidder360 /></RequireAuth>} />
+        <Route path="/po/audit" element={<RequireAuth role="PROCUREMENT_OFFICER"><AuditLog /></RequireAuth>} />
+
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }

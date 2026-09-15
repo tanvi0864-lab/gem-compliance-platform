@@ -1,60 +1,58 @@
-import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.db.session import engine, Base, SessionLocal
-from app.services.seed_demo import seed_demo_data
-from app.api import (
-    auth_router, tenders_router, bidders_router,
-    documents_router, verification_router, compliance_router,
-    audit_router, reports_router, mock_gov_router
-)
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
+from app.config import settings
+from app.database import init_db
+from app.routers import auth, tenders, documents, verification
 
 app = FastAPI(
-    title="GeM Bid Compliance AI",
-    description="AI-Powered Integrated Bid Compliance Verification Platform for GeM Procurement (SIH26100)",
-    version="1.0.0"
+    title="BIDNEX API",
+    description=(
+        "AI-Powered Integrated Bid Compliance Verification Platform for GeM Procurement. "
+        "PS 26100 — Smart India Hackathon. Organization: CPCL / Ministry of Petroleum & Natural Gas. "
+        "\n\n**Disclaimer:** Mock government API data is used for prototype demonstration."
+    ),
+    version="1.0.0",
 )
-
-# CORS setup
-origins = [
-    "http://localhost:5173",
-    "http://localhost:3000",
-    "http://127.0.0.1:5173",
-    "*"
-]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.cors_origins_list + ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.on_event("startup")
-def startup_event():
-    Base.metadata.create_all(bind=engine)
-    db = SessionLocal()
-    try:
-        seed_demo_data(db)
-    finally:
-        db.close()
+# Routers
+app.include_router(auth.router)
+app.include_router(tenders.router)
+app.include_router(documents.router)
+app.include_router(verification.router)
 
-@app.get("/health", tags=["Health Check"])
-def health_check():
+
+@app.on_event("startup")
+def startup():
+    init_db()
+    _ensure_upload_dir()
+
+
+def _ensure_upload_dir():
+    Path(settings.UPLOAD_DIRECTORY).mkdir(parents=True, exist_ok=True)
+
+
+@app.get("/", tags=["Health"])
+def root():
     return {
-        "status": "ok",
-        "service": "GeM AI Bid Compliance Verification Backend",
-        "mode": os.getenv("GOVT_VERIFICATION_MODE", "simulated")
+        "service": "BIDNEX API",
+        "version": "1.0.0",
+        "status": "running",
+        "disclaimer": "AI-assisted verification is decision-support only. Final procurement decision rests with the Procurement Officer.",
+        "mock_government_api": settings.MOCK_GOVERNMENT_API,
     }
 
-# Register Routers
-app.include_router(auth_router)
-app.include_router(tenders_router)
-app.include_router(bidders_router)
-app.include_router(documents_router)
-app.include_router(verification_router)
-app.include_router(compliance_router)
-app.include_router(audit_router)
-app.include_router(reports_router)
-app.include_router(mock_gov_router)
+
+@app.get("/health", tags=["Health"])
+def health():
+    return {"status": "ok"}
