@@ -62,7 +62,7 @@ export default function Login() {
           </div>
           <h1 className="text-3xl font-bold text-white">BIDNEX</h1>
           <p className="text-blue-200 text-sm mt-1">AI-Powered Bid Compliance Platform</p>
-          <p className="text-blue-300 text-xs mt-1">Smart India Hackathon · PS 26100 · CPCL</p>
+          <p className="text-blue-300 text-xs mt-1">GeM Compliance Platform · Enterprise Procurement System</p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-2xl p-8">

@@ -120,12 +120,12 @@ export function AppLayout({ children }: Props) {
         <header className="bg-white border-b border-gray-200 px-6 py-3.5 flex items-center justify-between">
           <div>
             <p className="text-xs text-gray-500">
-              Smart India Hackathon · PS 26100 · CPCL / Ministry of Petroleum &amp; Natural Gas
+              BIDNEX — GeM Compliance Platform · Ministry of Petroleum &amp; Natural Gas
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-xs bg-amber-50 text-amber-700 border border-amber-200 px-2.5 py-1 rounded-full font-medium">
-              🔴 Mock Government API
+            <span className="text-xs bg-slate-100 text-slate-700 border border-slate-200 px-2.5 py-1 rounded-full font-medium">
+              Mock Government Verification Engine
             </span>
             <button className="text-gray-500 hover:text-gray-700">
               <Bell className="h-4 w-4" />

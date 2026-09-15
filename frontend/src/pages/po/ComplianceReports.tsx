@@ -95,7 +95,7 @@ export default function ComplianceReports() {
                   <Shield className="h-6 w-6 text-blue-600" />
                   <span className="font-bold text-xl text-gray-900">BIDNEX OFFICIAL COMPLIANCE REPORT</span>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">Smart India Hackathon · Procurement Compliance Division · Decision Support Summary</p>
+                <p className="text-xs text-gray-500 mt-1">BIDNEX Procurement Compliance Division · Official Summary</p>
               </div>
               <div className="text-right text-xs text-gray-500 space-y-1">
                 <p><strong className="text-gray-700">Generated Date:</strong> {new Date().toLocaleDateString()}</p>

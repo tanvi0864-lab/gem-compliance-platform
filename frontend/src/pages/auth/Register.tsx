@@ -61,21 +61,12 @@ export default function Register() {
 
         <div className="bg-white rounded-2xl shadow-2xl p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Role */}
+            {/* Role - Fixed to Bidder for Public Registration */}
             <div>
               <label className="label">Account Type</label>
-              <div className="grid grid-cols-3 gap-2">
-                {['BIDDER', 'PROCUREMENT_OFFICER', 'ADMIN'].map(r => (
-                  <button key={r} type="button"
-                    onClick={() => update('role', r)}
-                    className={`px-3 py-2 rounded-lg border text-xs font-medium transition-colors ${
-                      form.role === r
-                        ? 'border-blue-600 bg-blue-50 text-blue-700'
-                        : 'border-gray-300 text-gray-600 hover:border-gray-400'
-                    }`}>
-                    {r === 'PROCUREMENT_OFFICER' ? 'Proc. Officer' : r.charAt(0) + r.slice(1).toLowerCase()}
-                  </button>
-                ))}
+              <div className="bg-gray-50 border border-gray-200 p-2.5 rounded-lg text-xs font-semibold text-blue-700 flex items-center justify-between">
+                <span>Bidder Partner Account</span>
+                <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-normal">Public Registration</span>
               </div>
             </div>
 
