@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores/auth'
 
 // Auth
