@@ -1,7 +1,6 @@
 import os
 import uuid
 import hashlib
-import aiofiles
 from pathlib import Path
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
@@ -53,8 +52,8 @@ async def upload_document(
     upload_dir = get_upload_dir()
     file_path = upload_dir / secure_name
 
-    async with aiofiles.open(file_path, "wb") as f:
-        await f.write(content)
+    with open(file_path, "wb") as f:
+        f.write(content)
 
     # Determine MIME type
     mime_map = {".pdf": "application/pdf", ".jpg": "image/jpeg",
