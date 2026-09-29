@@ -36,6 +36,8 @@ import WhatIfSimulator from '@/pages/po/WhatIfSimulator'
 import Bidder360 from '@/pages/po/Bidder360'
 import AuditLog from '@/pages/po/AuditLog'
 
+import { ErrorBoundary } from '@/components/shared/ErrorBoundary'
+
 function RequireAuth({ children, role }: { children: JSX.Element; role?: string | string[] }) {
   const { isAuthenticated, user } = useAuthStore()
   if (!isAuthenticated) return <Navigate to="/login" replace />
@@ -57,7 +59,8 @@ function HomeRedirect() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <ErrorBoundary>
+        <Routes>
         {/* Public */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -101,6 +104,7 @@ export default function App() {
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </BrowserRouter>
-  )
+    </ErrorBoundary>
+  </BrowserRouter>
+)
 }
